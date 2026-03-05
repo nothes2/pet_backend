@@ -31,6 +31,8 @@ export const useAuthStore = defineStore('auth', {
         localStorage.setItem('loginTimestamp', String(this.loginTimestamp))
         if (this.username) {
           localStorage.setItem('username', this.username)
+          // 记录上次成功登录的账号（不随退出清除）
+          localStorage.setItem('lastLoginUsername', this.username)
         }
         await this.fetchUserInfo()
         return true
@@ -64,9 +66,13 @@ export const useAuthStore = defineStore('auth', {
     /**
      * 退出登录
      */
-    async logout() {
+    async logout(options = {}) {
+      const { notifyServer = true } = options
+      const hasToken = Boolean(this.token || localStorage.getItem('token'))
       try {
-        await apiLogout()
+        if (notifyServer && hasToken) {
+          await apiLogout()
+        }
       } catch (error) {
         console.error('退出登录失败:', error)
       } finally {
@@ -91,11 +97,11 @@ export const useAuthStore = defineStore('auth', {
       const savedToken = localStorage.getItem('token')
       const savedLoginTimestamp = Number(localStorage.getItem('loginTimestamp')) || 0
       if (!savedToken) {
-        this.logout()
+        this.logout({ notifyServer: false })
         return
       }
       if (this.isSessionExpired(savedLoginTimestamp)) {
-        this.logout()
+        this.logout({ notifyServer: false })
         return
       }
       this.token = savedToken
@@ -108,7 +114,7 @@ export const useAuthStore = defineStore('auth', {
           await this.fetchUserInfo()
         } catch (e) {
           console.error('恢复会话失败', e)
-          this.logout()
+          this.logout({ notifyServer: false })
         }
       }
     },

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <rect width="1600" height="900" fill="#EAF2F8"/>
+
+  <!-- Soft circles -->
+  <g opacity="0.32" fill="none" stroke="#ACCADD" stroke-width="2">
+    <circle cx="220" cy="180" r="130"/>
+    <circle cx="1420" cy="160" r="150"/>
+    <circle cx="1320" cy="760" r="190"/>
+    <circle cx="260" cy="740" r="160"/>
+  </g>
+
+  <!-- Logo-style pet badges (clear, larger) -->
+  <g fill="none" stroke="#6FA3C5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+    <!-- Dog badge -->
+    <g transform="translate(360,260)">
+      <circle cx="0" cy="0" r="64" fill="#F7FBFF" stroke="#ACCADD"/>
+      <circle cx="0" cy="0" r="32"/>
+      <path d="M-36 -2c-16-10-20-30-8-46 12 6 22 20 26 38"/>
+      <path d="M36 -2c16-10 20-30 8-46-12 6-22 20-26 38"/>
+      <circle cx="-12" cy="-6" r="3.5"/>
+      <circle cx="12" cy="-6" r="3.5"/>
+      <ellipse cx="0" cy="12" rx="13" ry="9"/>
+      <circle cx="0" cy="9" r="4" fill="#6FA3C5" stroke="none"/>
+      <path d="M-8 18c8 8 16 8 24 0"/>
+    </g>
+
+    <!-- Cat badge -->
+    <g transform="translate(1240,220)">
+      <circle cx="0" cy="0" r="58" fill="#F7FBFF" stroke="#ACCADD"/>
+      <circle cx="0" cy="4" r="28"/>
+      <path d="M-20 -12l-18-24-2 32"/>
+      <path d="M20 -12l18-24 2 32"/>
+      <circle cx="-9" cy="4" r="3.2"/>
+      <circle cx="9" cy="4" r="3.2"/>
+      <circle cx="0" cy="12" r="3.2" fill="#6FA3C5" stroke="none"/>
+      <path d="M-6 18c6 4 12 4 18 0"/>
+      <path d="M-26 10h16"/>
+      <path d="M10 10h16"/>
+      <path d="M-24 18h14"/>
+      <path d="M10 18h14"/>
+    </g>
+
+    <!-- Rabbit badge -->
+    <g transform="translate(980,700)">
+      <circle cx="0" cy="0" r="56" fill="#F7FBFF" stroke="#ACCADD"/>
+      <circle cx="0" cy="10" r="26"/>
+      <path d="M-10 -22c-3-26 6-46 18-50 12 6 16 30 10 56"/>
+      <path d="M10 -22c3-26-6-46-18-50-12 6-16 30-10 56"/>
+      <circle cx="-8" cy="10" r="3.2"/>
+      <circle cx="8" cy="10" r="3.2"/>
+      <circle cx="0" cy="18" r="3" fill="#6FA3C5" stroke="none"/>
+      <path d="M-6 24c6 6 12 6 18 0"/>
+      <path d="M-4 28v10"/>
+      <path d="M4 28v10"/>
+    </g>
+
+    <!-- Paw print -->
+    <g transform="translate(640,150)">
+      <circle cx="-12" cy="0" r="6"/>
+      <circle cx="12" cy="0" r="6"/>
+      <circle cx="-28" cy="14" r="5"/>
+      <circle cx="28" cy="14" r="5"/>
+      <circle cx="0" cy="26" r="8"/>
+    </g>
+  </g>
+  <!-- Extra background details -->
+  <g fill="none" stroke="#ACCADD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.35">
+    <!-- Soft clouds -->
+    <path d="M520 120c-14-18-44-18-58 2-22-8-48 6-48 30 0 22 18 34 38 34h72c24 0 40-12 40-30 0-16-14-30-34-36"/>
+    <path d="M1080 120c-12-16-40-16-52 2-20-8-44 6-44 28 0 20 16 30 34 30h64c22 0 36-10 36-26 0-14-12-26-28-34"/>
+
+    <!-- Paw trail -->
+    <g transform="translate(180,520)">
+      <circle cx="0" cy="0" r="5"/>
+      <circle cx="20" cy="-6" r="4"/>
+      <circle cx="-20" cy="-6" r="4"/>
+      <circle cx="0" cy="16" r="6"/>
+    </g>
+    <g transform="translate(220,580)">
+      <circle cx="0" cy="0" r="4.5"/>
+      <circle cx="16" cy="-6" r="3.5"/>
+      <circle cx="-16" cy="-6" r="3.5"/>
+      <circle cx="0" cy="14" r="5"/>
+    </g>
+
+    <!-- Fish bone -->
+    <g transform="translate(1180,560)">
+      <path d="M-40 0h80"/>
+      <path d="M-26 -12l10 12-10 12"/>
+      <path d="M26 -12l10 12-10 12"/>
+      <circle cx="-44" cy="0" r="6"/>
+      <path d="M-44 0l-12-10"/>
+      <path d="M-44 0l-12 10"/>
+    </g>
+
+    <!-- Small hearts and dots -->
+    <path d="M760 120c8-8 18-8 26 0 10 10 0 22-13 30-13-8-23-20-13-30z"/>
+    <path d="M1380 520c6-6 14-6 20 0 8 8 0 18-10 24-10-6-18-16-10-24z"/>
+    <circle cx="980" cy="420" r="6"/>
+    <circle cx="1020" cy="390" r="4"/>
+    <circle cx="560" cy="680" r="5"/>
+  </g>
+
+</svg>

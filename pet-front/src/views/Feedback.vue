@@ -221,7 +221,7 @@ const submit = async () => {
   gap: 24px;
   padding: 20px 24px;
   border-radius: 18px;
-  background: linear-gradient(120deg, #f3f8ff 0%, #eef4ff 45%, #f8fbff 100%);
+  background: #f3f8ff;
   border: 1px solid #dfe8fb;
 }
 

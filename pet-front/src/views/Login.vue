@@ -1,5 +1,7 @@
 <template>
   <div class="login-container">
+    <img class="login-bg" :src="loginBg" alt="" />
+    <div class="login-overlay"></div>
     <el-card class="login-card">
       <template #header>
         <div class="login-header">
@@ -16,12 +18,15 @@
         @submit.prevent="handleLogin"
       >
         <el-form-item prop="username">
-          <el-input
+          <el-autocomplete
             v-model="loginForm.username"
+            :fetch-suggestions="queryUsernameSuggestions"
             placeholder="请输入用户名"
             prefix-icon="User"
             size="large"
             autocomplete="off"
+            :trigger-on-focus="false"
+            :debounce="0"
           />
         </el-form-item>
         
@@ -74,10 +79,23 @@ import { ref, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
+import loginBg from '@/assets/images/petBG-v2.svg?url'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const lastLoginUsername = ref(localStorage.getItem('lastLoginUsername') || '')
+
+const queryUsernameSuggestions = (queryString, cb) => {
+  const query = (queryString || '').trim().toLowerCase()
+  const saved = (lastLoginUsername.value || '').trim()
+  if (!query || !saved) {
+    cb([])
+    return
+  }
+  const match = saved.toLowerCase().startsWith(query)
+  cb(match ? [{ value: saved }] : [])
+}
 
 // 登录表单
 const loginFormRef = ref(null)
@@ -86,6 +104,9 @@ const loginForm = reactive({
   username: '',
   password: ''
 })
+if (lastLoginUsername.value) {
+  loginForm.username = lastLoginUsername.value
+}
 
 // 表单验证规则
 const loginRules = reactive({
@@ -140,21 +161,38 @@ const handleForgot = () => {
 
 <style scoped>
 .login-container {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)),
-    url('@/assets/images/petBG.png');
   background-repeat: no-repeat, no-repeat;
   background-position: center, center;
-  background-size: cover, contain;
+  background-size: cover, cover;
+}
+
+.login-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.login-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.22);
+  z-index: 1;
 }
 
 .login-card {
+  position: relative;
+  z-index: 2;
   width: 400px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.9);

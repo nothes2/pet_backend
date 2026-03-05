@@ -1,12 +1,12 @@
 <template>
-  <el-card shadow="hover" class="ops-card">
+  <div class="appointment-panel">
     <div class="card-header">
       <div>
         <div class="card-title">预约管理</div>
         <div class="card-sub">预约确认、分配与时间段</div>
       </div>
       <div class="card-actions">
-        <el-button type="primary" size="small" @click="createDialogVisible = true">
+        <el-button type="primary" size="small" @click="openCreateDialog">
           新增预约
         </el-button>
         <el-button text type="primary" @click="onGoList?.()">查看当前列表</el-button>
@@ -89,7 +89,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="预约类型">
-          <el-input v-model="createForm.appointmentType" placeholder="如 诊疗/疫苗" />
+          <el-select v-model="createForm.appointmentType" placeholder="请选择预约类型">
+            <el-option
+              v-for="type in appointmentTypeOptions"
+              :key="type"
+              :label="type"
+              :value="type"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="医疗机构">
           <el-input :model-value="institutionName || '当前账号所属机构'" disabled />
@@ -108,6 +115,7 @@
             value-format="HH:mm"
             placeholder="选择时间"
           />
+          <div v-if="scheduleHint" class="form-hint">{{ scheduleHint }}</div>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="createForm.status">
@@ -121,7 +129,7 @@
         <el-button type="primary" @click="submit">保存</el-button>
       </template>
     </el-dialog>
-  </el-card>
+  </div>
 </template>
 
 <script setup>
@@ -134,6 +142,9 @@ const props = defineProps({
   statusType: { type: Function, default: () => () => 'info' },
   statusText: { type: Function, default: () => (val) => val || '' },
   institutionName: { type: String, default: '' },
+  appointmentTypeOptions: { type: Array, default: () => ['诊疗'] },
+  defaultAppointmentType: { type: String, default: '诊疗' },
+  scheduleHint: { type: String, default: '' },
   onCreate: { type: Function, default: null },
   onGoList: { type: Function, default: null },
   onConfirm: { type: Function, default: null },
@@ -145,9 +156,15 @@ const createForm = reactive({
   petId: '',
   appointmentDate: '',
   appointmentTime: '',
-  appointmentType: '',
+  appointmentType: props.defaultAppointmentType || '诊疗',
   status: '待确认'
 })
+
+const openCreateDialog = () => {
+  createDialogVisible.value = true
+  createForm.appointmentType = props.defaultAppointmentType || props.appointmentTypeOptions[0] || '诊疗'
+  createForm.status = '待确认'
+}
 
 const submit = async () => {
   if (!props.onCreate) {
@@ -159,7 +176,7 @@ const submit = async () => {
   createForm.petId = ''
   createForm.appointmentDate = ''
   createForm.appointmentTime = ''
-  createForm.appointmentType = ''
+  createForm.appointmentType = props.defaultAppointmentType || props.appointmentTypeOptions[0] || '诊疗'
   createForm.status = '待确认'
 }
 
@@ -179,26 +196,28 @@ const handleCancel = async (row) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
   gap: 12px;
   flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
 }
 
-.ops-card {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 14px 28px rgba(31, 44, 80, 0.1);
+.appointment-panel {
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .card-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1f2d3d;
+  color: var(--text-1);
 }
 
 .card-sub {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-3);
   margin-top: 2px;
 }
 
@@ -210,12 +229,34 @@ const handleCancel = async (row) => {
 
 .table-sub {
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-3);
 }
 
 .table-actions-tip {
-  margin-top: 8px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-3);
+}
+
+.form-hint {
+  margin-top: 6px;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+:deep(.el-table) {
+  --el-table-border-color: var(--border);
+}
+
+:deep(.el-table th.el-table__cell) {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+
+:deep(.el-table--border::after),
+:deep(.el-table::before) {
+  background: var(--border);
 }
 </style>

@@ -104,26 +104,44 @@ const { pendingList, confirmedList, loading, statusType, statusText } = props
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
   gap: 12px;
   flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
 }
 
 .ops-card {
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 14px 28px rgba(31, 44, 80, 0.1);
+  border-radius: 0;
+  overflow: visible;
+  box-shadow: none;
+  border: none;
+  background: transparent;
 }
 
 .card-title {
   font-size: 18px;
   font-weight: 700;
-  color: #1f2d3d;
+  color: var(--text-1);
 }
 
 .card-sub {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-3);
   margin-top: 2px;
+}
+
+:deep(.el-table) {
+  --el-table-border-color: var(--border);
+}
+
+:deep(.el-table th.el-table__cell) {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+
+:deep(.el-table--border::after),
+:deep(.el-table::before) {
+  background: var(--border);
 }
 </style>

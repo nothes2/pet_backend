@@ -2870,7 +2870,7 @@ const notify = (module, action) => {
   padding: 12px;
   border-radius: 12px;
   cursor: pointer;
-  background: linear-gradient(135deg, rgba(64, 158, 255, 0.18), rgba(59, 130, 246, 0.12));
+  background: rgba(64, 158, 255, 0.16);
 }
 
 .logo-wrap {
@@ -3036,7 +3036,7 @@ const notify = (module, action) => {
 }
 
 .sidebar-menu :deep(.el-menu-item.is-active) {
-  background: linear-gradient(135deg, #409eff, #2f86eb);
+  background: #409eff;
   box-shadow: 0 8px 20px rgba(64, 158, 255, 0.28);
 }
 
@@ -3097,7 +3097,7 @@ const notify = (module, action) => {
 }
 
 .welcome-banner {
-  background: linear-gradient(135deg, #e0f2fe, #eff6ff);
+  background: #eaf3ff;
   border: 1px solid #dce7f7;
   border-radius: 14px;
   padding: 18px 20px;

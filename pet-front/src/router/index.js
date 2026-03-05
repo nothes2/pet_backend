@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { ElMessage } from 'element-plus'
+import { applyThemeMode, loadPreferences } from '@/utils/preferences'
 
 // 导入页面组件
 const Login = () => import('@/views/Login.vue')
@@ -129,11 +130,19 @@ router.beforeEach(async (to, from, next) => {
   if (localStorage.getItem('token') && (!authStore.isAuthenticated || !authStore.userInfo)) {
     await authStore.restoreSession?.()
   }
+
+  // 登录页与全局主题模式解耦：固定浅色，离开后恢复当前账号主题设置
+  if (to.path === '/login') {
+    applyThemeMode('light', false)
+  } else {
+    const { themeMode } = loadPreferences()
+    applyThemeMode(themeMode, false)
+  }
   
   // 需要登录验证
   if (to.meta.requiresAuth) {
     if (!authStore.isAuthenticated || authStore.isSessionExpired?.()) {
-      await authStore.logout?.()
+      await authStore.logout?.({ notifyServer: false })
       // 未登录，跳转到登录页
       next({ path: '/login', query: { redirect: to.fullPath } })
     } else {

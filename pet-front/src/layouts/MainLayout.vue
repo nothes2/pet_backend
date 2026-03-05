@@ -196,9 +196,9 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   padding: 0 24px;
-  background: #409eff;
-  border-bottom: 4px solid #409eff;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  background: var(--layout-header-bg);
+  border-bottom: 1px solid var(--layout-header-border);
+  box-shadow: var(--layout-header-shadow);
   height: 96px;
 }
 
@@ -271,7 +271,7 @@ const handleLogout = () => {
   margin-left: 122px;
   padding-right: 8px;
   transform: translateX(0);
-  --el-menu-active-color: #1f2d3d;
+  --el-menu-active-color: #ffffff;
   --el-menu-hover-bg-color: transparent;
   --el-menu-item-padding: 0 18px;
 }
@@ -304,7 +304,7 @@ const handleLogout = () => {
   bottom: 12px;
   height: 3px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--brand), #3b82f6);
+  background: var(--brand);
 }
 
 .user-actions {
@@ -319,6 +319,8 @@ const handleLogout = () => {
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .user-dropdown-menu {
@@ -328,8 +330,8 @@ const handleLogout = () => {
 
 .nav-search :deep(.el-input__wrapper) {
   border-radius: 14px;
-  background: linear-gradient(135deg, #ffffff 0%, #f2f6fb 100%);
-  border: 1px solid #d8e3f3;
+  background: var(--layout-search-bg);
+  border: 1px solid var(--layout-search-border);
   box-shadow: none !important;
   height: 36px;
   padding: 0 12px;
@@ -337,21 +339,25 @@ const handleLogout = () => {
 }
 
 .nav-search :deep(.el-input__wrapper:hover) {
-  background: #fff;
-  border-color: #b7c8e5;
+  background: var(--layout-search-bg-hover);
+  border-color: var(--layout-search-border-hover);
   box-shadow: 0 6px 18px rgba(59, 130, 246, 0.08);
 }
 
 .nav-search :deep(.is-focus),
 .nav-search :deep(.is-focus .el-input__wrapper) {
   box-shadow: 0 6px 18px rgba(59, 130, 246, 0.12) !important;
-  border-color: #9ab6e8;
-  background: #fff;
+  border-color: var(--layout-search-border-focus);
+  background: var(--layout-search-bg-hover);
 }
 
 .nav-search :deep(.el-input__inner) {
-  color: #1f2d3d;
+  color: var(--layout-search-text);
   line-height: 34px;
+}
+
+.nav-search :deep(.el-input__inner::placeholder) {
+  color: var(--text-3);
 }
 
 .nav-search {

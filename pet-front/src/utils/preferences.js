@@ -6,6 +6,16 @@ const APP_VERSION = import.meta.env.VITE_APP_VERSION || '0.0.0'
 
 let mediaQuery
 
+const getPreferenceScope = () => {
+  if (typeof localStorage === 'undefined') return ''
+  return (localStorage.getItem('username') || '').trim().toLowerCase()
+}
+
+const getScopedKey = (baseKey) => {
+  const scope = getPreferenceScope()
+  return scope ? `${baseKey}:${scope}` : ''
+}
+
 const getSystemTheme = () => {
   if (typeof window === 'undefined') return DEFAULT_THEME
   return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -33,7 +43,10 @@ export const applyThemeMode = (mode, persist = true) => {
     document.documentElement.setAttribute('data-theme', effectiveMode)
   }
   if (persist) {
-    localStorage.setItem(THEME_KEY, mode || DEFAULT_THEME)
+    const scopedThemeKey = getScopedKey(THEME_KEY)
+    if (scopedThemeKey) {
+      localStorage.setItem(scopedThemeKey, mode || DEFAULT_THEME)
+    }
   }
   watchSystemTheme(mode === 'system')
   return effectiveMode
@@ -47,14 +60,19 @@ export const applyLanguage = (lang) => {
   if (typeof document !== 'undefined') {
     document.documentElement.setAttribute('lang', lang || DEFAULT_LANGUAGE)
   }
-  localStorage.setItem(LANGUAGE_KEY, lang || DEFAULT_LANGUAGE)
+  const scopedLanguageKey = getScopedKey(LANGUAGE_KEY)
+  if (scopedLanguageKey) {
+    localStorage.setItem(scopedLanguageKey, lang || DEFAULT_LANGUAGE)
+  }
   return lang || DEFAULT_LANGUAGE
 }
 
 export const loadPreferences = () => {
+  const scopedThemeKey = getScopedKey(THEME_KEY)
+  const scopedLanguageKey = getScopedKey(LANGUAGE_KEY)
   return {
-    themeMode: localStorage.getItem(THEME_KEY) || DEFAULT_THEME,
-    language: localStorage.getItem(LANGUAGE_KEY) || DEFAULT_LANGUAGE
+    themeMode: scopedThemeKey ? (localStorage.getItem(scopedThemeKey) || DEFAULT_THEME) : DEFAULT_THEME,
+    language: scopedLanguageKey ? (localStorage.getItem(scopedLanguageKey) || DEFAULT_LANGUAGE) : DEFAULT_LANGUAGE
   }
 }
 

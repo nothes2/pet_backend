@@ -62,7 +62,7 @@ service.interceptors.response.use(
           type: 'warning'
         }
       ).then(() => {
-        authStore.logout()
+        authStore.logout({ notifyServer: false })
         router.push(`/login?redirect=${router.currentRoute.fullPath}`)
       })
     } else {
