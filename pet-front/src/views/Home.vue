@@ -96,14 +96,28 @@
           <div class="card-title">照片墙</div>
           <div class="photo-wall-actions">
             <el-button
+              v-if="!editMode"
               class="photo-edit-btn"
               size="small"
-              :type="editMode ? 'danger' : 'default'"
               :disabled="!photoList.length"
-              @click="handleEditClick"
+              @click="enterEditMode"
             >
-              {{ editMode ? '删除' : '编辑' }}
+              编辑
             </el-button>
+            <template v-else>
+              <el-button class="photo-cancel-btn" size="small" @click="cancelEditMode">
+                取消
+              </el-button>
+              <el-button
+                class="photo-delete-btn"
+                type="danger"
+                size="small"
+                :disabled="!selectedPhotos.length"
+                @click="requestDeleteSelected"
+              >
+                删除
+              </el-button>
+            </template>
             <el-upload
               class="photo-upload-btn"
               :http-request="handleUploadPhoto"
@@ -1125,12 +1139,18 @@ const toggleSelect = (photoId) => {
   }
 }
 
-const handleEditClick = () => {
-  if (!editMode.value) {
-    editMode.value = true
-    selectedPhotos.value = []
-    return
-  }
+const enterEditMode = () => {
+  editMode.value = true
+  selectedPhotos.value = []
+}
+
+const cancelEditMode = () => {
+  editMode.value = false
+  selectedPhotos.value = []
+  deleteConfirmVisible.value = false
+}
+
+const requestDeleteSelected = () => {
   if (!selectedPhotos.value.length) {
     ElMessage.warning('请选择要删除的照片')
     return
@@ -1484,6 +1504,14 @@ onBeforeUnmount(() => {
 }
 
 .photo-edit-btn {
+  order: 0;
+}
+
+.photo-cancel-btn {
+  order: 0;
+}
+
+.photo-delete-btn {
   order: 0;
 }
 

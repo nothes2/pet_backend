@@ -13,6 +13,9 @@ build/
 .npm-cache/
 .vscode/
 target/
+.env
+.env.local
+.env.prod
 
 
 **/.next/
